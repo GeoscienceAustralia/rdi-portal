@@ -4,11 +4,11 @@
       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
     <!-- Turn on HostPrecedingPropertyPlaceholderConfigurer -->
     <!-- http://jdwyah.blogspot.com/2006/12/updated-spring-configuration.html -->
-    <bean id="propertyConfigurer" class="org.auscope.portal.core.server.PortalPropertyPlaceholderConfigurer">
+    <bean id="propertyConfigurer" class="org.auscope.portal.core.server.PortalPropertySourcesPlaceholderConfigurer">
         <property name="locations">
             <list>
                 <value>classpath:config.properties</value>
-                <value>version.properties</value>
+                <value>classpath:version.properties</value>
             </list>
         </property>
     </bean>
@@ -166,8 +166,8 @@
     <bean id="cswGARegistry" class="org.auscope.portal.core.services.csw.custom.CustomRegistry">
         <constructor-arg name="id" value="cswGARegistry" />
         <constructor-arg name="title" value="Geoscience Australia" />
-        <constructor-arg name="serviceUrl" value="http://www.ga.gov.au/darwin-geonetwork/srv/en/csw" />
-        <constructor-arg name="recordInformationUrl" value="http://www.ga.gov.au/darwin-geonetwork/srv/en/main.home?uuid=%1$s" />
+        <constructor-arg name="serviceUrl" value="http://ecat.ga.gov.au/geonetwork/srv/eng/csw" />
+        <constructor-arg name="recordInformationUrl" value="http://ecat.ga.gov.au/geonetwork/srv/eng/search#!%1$s" />
     </bean>
 
     <bean id="customRegistryList" class="java.util.ArrayList">

@@ -36,7 +36,7 @@ Ext.define('auscope.layer.AuScopeQuerierFactory', {
         } else if (wmsResources.length > 0) {
             //WMS may mean Geotransects
             for (var i = 0; i < wmsResources.length; i++) {
-                if (wmsResources[i].get('name') === 'OnshoreSeismicSurveyLines') {
+                if (wmsResources[i].get('name') === 'Onshore_Seismic_Surveys') {
                     return Ext.create('portal.layer.querier.wms.GeotransectQuerier', cfg);
                 }
             }

@@ -503,7 +503,7 @@ public class EarthResourcesFilterController extends BasePortalController {
         String filter = this.mineralOccurrenceService.getMinOccurViewFilter(name, unescapeCommodityName, minOreAmount,
                 minReserves, minResources, bbox);
 
-        String style = this.getStyle(filter, EarthResourcesDownloadController.MIN_OCCUR_VIEW_TYPE, "Mineral Occurrence", Styles.MINERAL_OCCURRENCE);
+        String style = this.getStyle(filter, EarthResourcesDownloadController.MINERAL_OCCURRENCE_VIEW_FEATURE_TYPE, "Mineral Occurrence", Styles.MINERAL_OCCURRENCE);
 
         response.setContentType("text/xml");
 

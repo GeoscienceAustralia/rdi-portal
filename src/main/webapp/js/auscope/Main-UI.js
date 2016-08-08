@@ -204,22 +204,6 @@ Ext.application({
             autoLoad : true
         });
 
-
-        // Create the ResearchDataLayer store
-        var researchDataLayerStore = Ext.create('Ext.data.Store', {
-            model : 'portal.knownlayer.KnownLayer',
-            groupField: 'group',
-            proxy : {
-                type : 'ajax',
-                url : 'getResearchDataLayers.do',
-                reader : {
-                    type : 'json',
-                    rootProperty : 'data'
-                }
-            },
-            autoLoad : true
-        });
-
         //Create our store for holding the set of layers that have been added to the map
         var activeLayerStore = Ext.create('portal.layer.LayerStore');
         
@@ -254,7 +238,7 @@ Ext.application({
         
 
         
-        var knownLayersPanel = Ext.create('portal.widgets.panel.KnownLayerPanel', {
+        var knownLayersPanel = Ext.create('auscope.widgets.panel.GAKnownLayerPanel', {
             title : 'Featured',
             id: 'knownLayersPanel',
             store : knownLayerStore,
@@ -276,23 +260,6 @@ Ext.application({
         var knownLayersMenuFactory = Ext.create('auscope.layer.GAFilterPanelMenuFactory',{map : map, showFilter: false, addResetFormActionForWMS : false, recordPanel : knownLayersPanel})
         knownLayersPanel.menuFactory = knownLayersMenuFactory;
 
-        var unmappedRecordsPanel = Ext.create('portal.widgets.panel.CSWRecordPanel', {
-            title : 'Registered',
-            store : unmappedCSWRecordStore,
-            onlineResourcePanelType : 'gaonlineresourcespanel',
-            serviceInformationIcon: 'img/information.png',
-            mapExtentIcon: 'img/extent3.png',
-            tooltip : {
-                title : 'Registered Layers',
-                text : '<p>The layers that appear here are the data services that were discovered in a remote registry but do not belong to any of the Featured Layers groupings.</p>',
-                showDelay : 100,
-                dismissDelay : 30000
-            },
-            map : map,
-            layerFactory : defaultLayerFactory
-
-        });
-
         var customRecordsPanel = Ext.create('auscope.widgets.CustomRecordPanel', {
             title : 'Custom',
             itemId : 'org-auscope-custom-record-panel',
@@ -311,24 +278,6 @@ Ext.application({
             layerFactory : defaultLayerFactory
         });
 
-        var researchDataPanel = Ext.create('portal.widgets.panel.KnownLayerPanel', {
-            title : 'Research Data',
-            store : researchDataLayerStore,
-            enableBrowse : false,//VT: if true browse catalogue option will appear
-            map : map,
-            layerFactory : defaultLayerFactory,
-            onlineResourcePanelType : 'gaonlineresourcespanel',
-            serviceInformationIcon: 'img/information.png',
-            mapExtentIcon: 'img/extent3.png',
-            tooltip : {
-                title : 'Research Data Layers',
-                text : '<p>The layers in this tab represent past/present research activities and may contain partial or incomplete information.</p>',
-                showDelay : 100,
-                dismissDelay : 30000
-            }
-
-        });
-
         // header
         var northPanel = {
             layout: 'fit',
@@ -337,6 +286,7 @@ Ext.application({
                 xtype: 'gaheader',
                 map: map,
                 registryStore: cswServiceItemStore,
+                knownLayerStore: knownLayerStore,
                 layerFactory: defaultLayerFactory
             }]
         };
@@ -361,9 +311,7 @@ Ext.application({
             enableTabScroll : true,
             items:[
                 knownLayersPanel,
-                // unmappedRecordsPanel, TODO: Remove code for uneeded tabs
                 customRecordsPanel
-                // researchDataPanel
             ]
         });
         
@@ -490,8 +438,8 @@ Ext.application({
         activeLayersPanel.anchorTo(body, 'tr-tr', [0, 100], true);
 
         // deserialise and add the restored layers if necessary
-        if (decodedString) {            
-            deserializationHandler = Ext.create('portal.util.permalink.DeserializationHandler', {
+        if (decodedString) {
+            deserializationHandler = Ext.create('ga.widgets.GADeserializationHandler', {
                 knownLayerStore : knownLayerStore,
                 cswRecordStore : unmappedCSWRecordStore,
                 layerFactory : defaultLayerFactory,

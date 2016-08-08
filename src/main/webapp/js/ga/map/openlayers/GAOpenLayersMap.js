@@ -46,7 +46,9 @@ Ext.define('ga.map.openlayers.GAOpenLayersMap', {
             if (primitive && layer && primitive instanceof portal.map.openlayers.primitives.Polygon) {
                 queryTargets = this._makeQueryTargetsPolygon(primitive, this.layerStore, longitude, latitude);
             } else if (primitive && layer) {
-                queryTargets = this._makeQueryTargetsVector(primitive, longitude, latitude);
+                // if the user clicked on a feature then add it as a selectable option along with map layers underneath
+                queryTargets.push(this._makeQueryTargetsVector(primitive, longitude, latitude)[0]);
+                queryTargets = queryTargets.concat(this._makeQueryTargetsMap(this.layerStore, longitude, latitude));
             } else {
                 queryTargets = this._makeQueryTargetsMap(this.layerStore, longitude, latitude);
             }
@@ -90,7 +92,7 @@ Ext.define('ga.map.openlayers.GAOpenLayersMap', {
                 // the default
                 new OpenLayers.Layer.Google(
                         "Google Satellite",
-                        {type: google.maps.MapTypeId.SATELLITE, numZoomLevels: 22}
+                        {type: google.maps.MapTypeId.SATELLITE, numZoomLevels: 22}                       
                 ),
                 new OpenLayers.Layer.Google(
                     "Google Streets", 
@@ -105,7 +107,7 @@ Ext.define('ga.map.openlayers.GAOpenLayersMap', {
                     {type: google.maps.MapTypeId.HYBRID, numZoomLevels: 20}
                 ),
                 new OpenLayers.Layer.WMS (
-                    "World Political Boundaries",
+                    "World Political Boundaries (white background)",
                     "http://www.ga.gov.au/gis/services/topography/World_Political_Boundaries_WM/MapServer/WMSServer",
                     {layers: 'Countries'}
                 )],
@@ -115,6 +117,11 @@ Ext.define('ga.map.openlayers.GAOpenLayersMap', {
                 zoom: 4
         });
 
+        // set wrapDateLine to false on all the base layers
+        for (var i = 0; i < me.map.layers.length; i++) {
+            me.map.layers[i].wrapDateLine = false;
+        }
+        
         this.highlightPrimitiveManager = this.makePrimitiveManager();
         this.container = container;
         this.rendered = false;               
@@ -267,6 +274,41 @@ Ext.define('ga.map.openlayers.GAOpenLayersMap', {
         }, this);
     },
     
+    _makeQueryTargetsVector : function(primitive, longitude, latitude) {
+        var id = primitive.getId();
+        var onlineResource = primitive.getOnlineResource();
+        var layer = primitive.getLayer();
+        var cswRecord = primitive.getCswRecord();
+
+        if (!cswRecord) {
+            for (var i = 0; i < layer.get('cswRecords').length; i++) {
+                var testCswRecord = layer.get('cswRecords')[i];
+                var allResources = testCswRecord.get('onlineResources');
+                for (var j = 0; j < allResources.length; j++) {
+                    var cswOnlineResource = allResources[j];
+                    if (cswOnlineResource.get('url') == onlineResource.get('url')) {
+                        // found it
+                        cswRecord = testCswRecord;
+                        break;
+                    }
+                }
+                if (cswRecord) {
+                    break;
+                }
+            }
+        }
+
+        return [Ext.create('portal.layer.querier.QueryTarget', {
+            id : id,
+            lat : latitude,
+            lng : longitude,
+            onlineResource : onlineResource,
+            layer : layer,
+            cswRecord : cswRecord,
+            explicit : true
+        })];
+    },
+
     _makeQueryTargetsMap : function(layerStore, longitude, latitude) {
         var queryTargets = [];
         if (!layerStore) {
@@ -281,6 +323,11 @@ Ext.define('ga.map.openlayers.GAOpenLayersMap', {
             for(var j = 0; j < cswRecords.length; j++){
 
                 var cswRecord = cswRecords[j];
+
+                //Don't include WMS query targets if we have WCS queries for the same record
+                var allResources = cswRecord.get('onlineResources');
+                var wmsResources = portal.csw.OnlineResource.getFilteredFromArray(allResources, portal.csw.OnlineResource.WMS);
+                var wcsResources = portal.csw.OnlineResource.getFilteredFromArray(allResources, portal.csw.OnlineResource.WCS);
 
                 //ensure this click lies within this CSW record
                 var containsPoint = false;
@@ -297,13 +344,6 @@ Ext.define('ga.map.openlayers.GAOpenLayersMap', {
                 if (!containsPoint || layer.visible==false) {
                     continue;
                 }
-
-                //Finally we don't include WMS query targets if we
-                //have WCS queries for the same record
-                var allResources = cswRecord.get('onlineResources');
-                var wmsResources = portal.csw.OnlineResource.getFilteredFromArray(allResources, portal.csw.OnlineResource.WMS);
-                var wcsResources = portal.csw.OnlineResource.getFilteredFromArray(allResources, portal.csw.OnlineResource.WCS);
-
 
                 //VT: if layerswitcher layer visibility is set to false, then do not query that layer as well.
                 if (wmsResources[0]) {
@@ -346,27 +386,30 @@ Ext.define('ga.map.openlayers.GAOpenLayersMap', {
                     if (type === portal.csw.OnlineResource.WMS ||
                         type === portal.csw.OnlineResource.WCS) {
 
-                        var serviceFilter = layer.get('filterer').getParameters().serviceFilter;
-                        if (serviceFilter) {
-                            if (Ext.isArray(serviceFilter)) {
-                                serviceFilter = serviceFilter[0];
+                        // use the service filter to filter out results, but not if the filter is filtering on WFS records, it just won't work
+                        if (!layer.get('renderer') instanceof portal.layer.renderer.wfs.FeatureWithMapRenderer) {
+                            var serviceFilter = layer.get('filterer').getParameters().serviceFilter;
+                            if (serviceFilter) {
+                                if (Ext.isArray(serviceFilter)) {
+                                    serviceFilter = serviceFilter[0];
+                                }
+                                // layers get filtered based on the service provider
+                                if (resourcesToIterate[k].get('url') != serviceFilter &&
+                                        this._getDomain(resourcesToIterate[k].get('url')) != serviceFilter) {
+                                    continue;
+                                }
                             }
-                            // layers get filtered based on the service provider
-                            if (resourcesToIterate[k].get('url') != serviceFilter &&
-                                    this._getDomain(resourcesToIterate[k].get('url')) != serviceFilter) {
-                                continue;
+
+                            var nameFilter = layer.get('filterer').getParameters().name;
+                            if (nameFilter) {
+                                // layers get filtered based on the name
+                                if (resourcesToIterate[k].get('name') != nameFilter &&
+                                        this._getDomain(resourcesToIterate[k].get('name')) != nameFilter) {
+                                    continue;
+                                }
                             }
                         }
-                        
-                        var nameFilter = layer.get('filterer').getParameters().name;
-                        if (nameFilter) {
-                            // layers get filtered based on the name
-                            if (resourcesToIterate[k].get('name') != nameFilter &&
-                                    this._getDomain(resourcesToIterate[k].get('name')) != nameFilter) {
-                                continue;
-                            }
-                        }
-                        
+
                         queryTargets.push(Ext.create('portal.layer.querier.QueryTarget', {
                             id : '',
                             lat : latitude,
@@ -376,7 +419,6 @@ Ext.define('ga.map.openlayers.GAOpenLayersMap', {
                             layer : layer,
                             explicit : true
                         }));
-                                                
                     }
                 }
             }

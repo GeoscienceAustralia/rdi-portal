@@ -37,14 +37,7 @@ Ext.define('auscope.layer.GAFilterPanelMenuFactory', {
             var wfsResources = portal.csw.OnlineResource.getFilteredFromArray(allOnlineResources, portal.csw.OnlineResource.WFS);
             var wcsResources = portal.csw.OnlineResource.getFilteredFromArray(allOnlineResources, portal.csw.OnlineResource.WCS);
 
-            // only provide reset option if there are resources other than just WMS resources
-            // otherwise there will be no form fields to reset
             if (wfsResources.length > 0 || wcsResources.length > 0) {
-                menuItems.push(this._getResetFormAction());
-            }
-
-            // only provide download option if there are WFS resources to download
-            if (wfsResources.length > 0) {
                 menuItems.push(this._getDownloadAction(layer));
             }
         }

@@ -33,6 +33,7 @@ public class MineralOccurrenceDownloadService extends BaseWFSService {
     public static final String MINE_FEATURE_TYPE = "er:MiningFeatureOccurrence";
     public static final String MINERAL_OCCURRENCE_FEATURE_TYPE = "gsml:MappedFeature";
     public static final String MINING_ACTIVITY_FEATURE_TYPE = "er:MiningFeatureOccurrence";
+    public static final String MINERAL_OCCURRENCE_VIEW_FEATURE_TYPE = "mo:MinOccView";
     public static final int DEFAULT_TIMEOUT = 60 * 60 * 1000; //VT: we give 1 hour to download per service location
 
     // ----------------------------------------------------------- Constructors
@@ -133,6 +134,30 @@ public class MineralOccurrenceDownloadService extends BaseWFSService {
 
         HttpRequestBase method = generateWFSRequest(serviceURL, MINERAL_OCCURRENCE_FEATURE_TYPE, null, filterString,
                 maxFeatures, null, ResultType.Results, null, startIndex);
+        try {
+            return httpServiceCaller.getMethodResponseAsStream(method);
+
+        } catch (Exception ex) {
+            throw new PortalServiceException(method, ex);
+        }
+    }
+    
+    /**
+     * @param serviceURL
+     * @param filter
+     * @param maxFeatures
+     * @return
+     * @throws PortalServiceException
+     * @throws URISyntaxException
+     */
+    public InputStream downloadMineralOccurrenceView(String serviceURL,
+    		String filter,
+               int maxFeatures, String outputFormat) throws PortalServiceException, URISyntaxException {
+
+
+
+        HttpRequestBase method = generateWFSRequest(serviceURL, MINERAL_OCCURRENCE_VIEW_FEATURE_TYPE, null, filter,
+                maxFeatures, null, ResultType.Results, outputFormat);
         try {
             return httpServiceCaller.getMethodResponseAsStream(method);
 

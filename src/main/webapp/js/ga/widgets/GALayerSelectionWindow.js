@@ -52,7 +52,7 @@ Ext.define('ga.widgets.GALayerSelectionWindow', {
                     service_URL : me.getCapabilitiesUrl,
                     weakCheck : 'Y',
                     recordName : me.cswRecord.get('name'),
-                    isService : me.cswRecord.get('service')
+                    isService : this._checkForService()
                 }, 
                 reader : {
                     type : 'json',
@@ -153,6 +153,24 @@ Ext.define('ga.widgets.GALayerSelectionWindow', {
 
         //Call parent constructor
         this.superclass.constructor.call(me, cfg);
-    } 
+    },
+    
+    _checkForService : function () {
+      if (this.cswRecord.get('service')) 
+        return true;
+      else {
+        onlineResources = this.cswRecord.get('onlineResources');
+        for (var i = 0; i < onlineResources.length; i++) {
+          var type = onlineResources[i].get('type');
+          if (type == portal.csw.OnlineResource.WMS) {
+              return true;
+              break;
+          }                                          
+        }
+        return false;
+      }
+    }
    
+
+
 });

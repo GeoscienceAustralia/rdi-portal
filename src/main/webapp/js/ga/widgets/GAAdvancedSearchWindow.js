@@ -8,6 +8,13 @@ Ext.define('ga.widgets.GAAdvancedSearchWindow', {
     layerFactory : null,
     layerStore : null,
     
+    listeners: {
+        show: function() {
+            var container = Ext.get('center_region-map');
+            this.setPosition(container.getX()-1, container.getY()-1);
+        }
+    },
+
     constructor : function(cfg) {      
         
     	var me = this;
@@ -72,14 +79,15 @@ Ext.define('ga.widgets.GAAdvancedSearchWindow', {
                 }
             }
         }];
-        
+
         Ext.apply(cfg, {
             title : 'Enter Parameters',
             layout : 'fit',
             width : 500,
             items : [me.cswFilterFormPanel],
-            scrollable: false,
-            buttons: controlButtons         
+            maxHeight: Ext.get('center_region-map').getHeight(),
+            buttons : controlButtons,
+            modal : false
         });
 
         this.callParent(arguments);

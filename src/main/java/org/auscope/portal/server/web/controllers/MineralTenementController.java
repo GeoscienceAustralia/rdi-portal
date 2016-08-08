@@ -1,7 +1,6 @@
 package org.auscope.portal.server.web.controllers;
 
 import java.io.ByteArrayInputStream;
-import java.io.InputStream;
 import java.io.OutputStream;
 
 import javax.servlet.http.HttpServletResponse;
@@ -9,12 +8,15 @@ import javax.servlet.http.HttpServletResponse;
 import org.auscope.portal.core.server.OgcServiceProviderType;
 import org.auscope.portal.core.server.controllers.BasePortalController;
 import org.auscope.portal.core.services.methodmakers.filter.FilterBoundingBox;
+import org.auscope.portal.core.services.responses.wfs.WFSCountResponse;
+import org.auscope.portal.core.services.responses.wfs.WFSResponse;
 import org.auscope.portal.core.util.FileIOUtil;
 import org.auscope.portal.server.web.service.MineralTenementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class MineralTenementController extends BasePortalController {
@@ -27,29 +29,83 @@ public class MineralTenementController extends BasePortalController {
     public MineralTenementController(MineralTenementService mineralTenementService) {
         this.mineralTenementService = mineralTenementService;
     }
+    
+    
+    @RequestMapping("/getAllMineralTenementFeatures.do")
+    public ModelAndView getAllMineralTenementFeatures(
+            @RequestParam("serviceUrl") String serviceUrl,
+            @RequestParam(required = false, value = "tenementName") String tenementName,
+            @RequestParam(required = false, value = "owner") String owner,
+            @RequestParam(required = false, value = "bbox") String bboxJson,
+            @RequestParam(required = false, value = "maxFeatures", defaultValue = "0") int maxFeatures)
+                    throws Exception {
+
+        // The presence of a bounding box causes us to assume we will be using this GML for visualizing on a map
+        // This will in turn limit the number of points returned to 200
+        OgcServiceProviderType ogcServiceProviderType = OgcServiceProviderType.parseUrl(serviceUrl);
+        FilterBoundingBox bbox = FilterBoundingBox.attemptParseFromJSON(bboxJson, ogcServiceProviderType);
+        WFSResponse response = null;
+        try {
+            response = this.mineralTenementService.getAllTenements(serviceUrl, tenementName, owner,
+                    maxFeatures, bbox, null);
+
+            
+        } catch (Exception e) {
+            log.warn(String.format("Error performing filter for '%1$s': %2$s", serviceUrl, e));
+            log.debug("Exception: ", e);
+            return this.generateExceptionResponse(e, serviceUrl);
+        }
+        
+        log.warn("GML: " + response.getData());
+        
+        
+        return generateJSONResponseMAV(true, "gml", response.getData(), response.getMethod());
+    }
+    
+    @RequestMapping("/getMineralTenementCount.do")
+    public ModelAndView getMineralTenementCount(
+            @RequestParam("serviceUrl") String serviceUrl,
+            @RequestParam(required = false, value = "tenementName") String tenementName,
+            @RequestParam(required = false, value = "owner") String owner,
+            @RequestParam(required = false, value = "bbox") String bboxJson,
+            @RequestParam(required = false, value = "maxFeatures", defaultValue = "0") int maxFeatures)
+                    throws Exception {
+
+        // The presence of a bounding box causes us to assume we will be using this GML for visualizing on a map
+        // This will in turn limit the number of points returned to 200
+        OgcServiceProviderType ogcServiceProviderType = OgcServiceProviderType.parseUrl(serviceUrl);
+        FilterBoundingBox bbox = FilterBoundingBox.attemptParseFromJSON(bboxJson, ogcServiceProviderType);
+        WFSCountResponse response = null;
+        try {
+            response = this.mineralTenementService.getTenementCount(serviceUrl, tenementName, owner,
+                    maxFeatures, bbox);
+
+            
+        } catch (Exception e) {
+            log.warn(String.format("Error performing filter for '%1$s': %2$s", serviceUrl, e));
+            log.debug("Exception: ", e);
+            return this.generateExceptionResponse(e, serviceUrl);
+        }
+      
+        
+        return generateJSONResponseMAV(true, new Integer(response.getNumberOfFeatures()), "");
+    }
+    
 
     @RequestMapping("/doMineralTenementDownload.do")
-    public void doMineralTenementDownload(
+    public ModelAndView doMineralTenementDownload(
             @RequestParam("serviceUrl") String serviceUrl,
-            @RequestParam("name") String name,
-            @RequestParam(required = false, value = "tenementType") String tenementType,
-            @RequestParam("owner") String owner,
-            @RequestParam(required = false, value = "size") String size,
-            @RequestParam(required = false, value = "endDate") String endDate,
+            @RequestParam(required = false, value = "name") String name,
+            @RequestParam(required = false, value = "owner") String owner,
             @RequestParam(required = false, value = "bbox") String bboxJson,
-            HttpServletResponse response) throws Exception {
+            @RequestParam(required = false, value = "maxFeatures") Integer maxFeatures,
+            @RequestParam(required = false, value = "outputFormat") String outputFormat) throws Exception {
 
         OgcServiceProviderType ogcServiceProviderType = OgcServiceProviderType.parseUrl(serviceUrl);
         FilterBoundingBox bbox = FilterBoundingBox.attemptParseFromJSON(bboxJson, ogcServiceProviderType);
-        String filter = this.mineralTenementService.getMineralTenementFilter(name, tenementType, owner, size, endDate,
-                bbox); // VT:get filter from service
-
-        response.setContentType("text/xml");
-        OutputStream outputStream = response.getOutputStream();
-
-        InputStream results = this.mineralTenementService.downloadWFS(serviceUrl, MINERAL_TENEMENT_TYPE, filter, null);
-        FileIOUtil.writeInputToOutputStream(results, outputStream, 8 * 1024, true);
-        outputStream.close();
+        WFSResponse response = this.mineralTenementService.getAllTenements(serviceUrl, name, owner, maxFeatures, bbox, outputFormat);
+        
+        return generateNamedJSONResponseMAV(true, "gml", response.getData(), response.getMethod());
 
     }
 

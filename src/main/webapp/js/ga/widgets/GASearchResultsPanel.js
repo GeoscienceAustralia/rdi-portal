@@ -61,10 +61,12 @@ Ext.define('ga.widgets.GASearchResultsPanel', {
                 },
                 
                 // when the view is fully loaded we need to check for availability of some features and update the DOM                    
-                viewready: function(view) {
+                afterlayout: function(view) {
 
                     me.cswRecordStore.each(function(record,id){
                         var hasWMSResource = false;
+                        var hasDownloadableData = false;
+
                         var onlineResources = record.data.onlineResources;
                         for (var i = 0; i < onlineResources.length; i++) {
                             var type = onlineResources[i].get('type');
@@ -73,21 +75,13 @@ Ext.define('ga.widgets.GASearchResultsPanel', {
                                 break;
                             }                                          
                         };
-                                   
-                        var addWMSLinkId = '_' + record.get('id').replace(/\W/g, '') + '_addWMSLink'; 
-                        var element = Ext.get(addWMSLinkId);
+                        var uris = record.get('datasetURIs');
+                        if (uris && uris.length > 0 && uris[0]) hasDownloadableData = true;
+
+                        me._activateLinkForDisplay(record, hasDownloadableData, '_downloadDataLink', function() {me.displayFileDownloadWindow(record)})
+
+                        me._activateLinkForDisplay(record, hasWMSResource, '_addWMSLink', function() {me.displayWMSLayers(record)})
                         
-                        if (!hasWMSResource) {
-                            element.addCls('pretendLinkDisabled');
-                            element.removeCls('pretendLinkEnabled');
-                        } else {
-                            // pretend it to be a link.
-                            element.addCls('pretendLinkEnabled');
-                            element.removeCls('pretendLinkDisabled');
-                            element.addListener('click', function(){
-                                me.displayWMSLayers(record);
-                            });
-                        };
                     });
                    
                 }
@@ -96,6 +90,21 @@ Ext.define('ga.widgets.GASearchResultsPanel', {
         });
 
       this.callParent(arguments);
+    },
+
+    _activateLinkForDisplay : function(record, activateLink, linkIdSuffix, clickFunction) {
+        var linkId = '_' + record.get('id').replace(/\W/g, '') + linkIdSuffix; 
+
+        var element = Ext.get(linkId);
+
+        if (!activateLink) {
+            element.addCls('pretendLinkDisabled');
+            element.removeCls('pretendLinkEnabled');
+        } else {
+            element.addCls('pretendLinkEnabled');
+            element.removeCls('pretendLinkDisabled');
+            element.addListener('click', clickFunction);
+        };
     },
 
     /**
@@ -174,7 +183,9 @@ Ext.define('ga.widgets.GASearchResultsPanel', {
             
             var recordInfoUrl = record.get('recordInfoUrl');
             
-            var addWMSLinkId = '_' + record.get('id').replace(/\W/g, '') + '_addWMSLink'; 
+            var downloadDataLinkId = '_' + record.get('id').replace(/\W/g, '') + '_downloadDataLink';
+            var addWMSLinkId = '_' + record.get('id').replace(/\W/g, '') + '_addWMSLink';
+
             var elements = {
                 xtype: 'panel',
                 cls : 'gasearchresult',              
@@ -212,26 +223,16 @@ Ext.define('ga.widgets.GASearchResultsPanel', {
                         },
                         autoEl: {
                           tag: 'a',
-                          target : '_blank',
                           href: '#',
                           cn: 'Show extent'
                         }                      
                     },
                     {
                         xtype: 'box',
-                        listeners: {
-                            render: function(component) {            
-                                component.getEl().on('click', function(e) {
-                                    e.stopEvent();   
-                                    me.displayFileDownloadWindow(record);
-                                });    
-                            }
-                        },
+                        id: downloadDataLinkId,
                         autoEl: {
-                          tag: 'a',
-                          target : '_blank',
-                          href: '#',
-                          cn: 'Download data'
+                          tag: 'span',
+                          html: 'Download data'
                         }
                     },
                     {

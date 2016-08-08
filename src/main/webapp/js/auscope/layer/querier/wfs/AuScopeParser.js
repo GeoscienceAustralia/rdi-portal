@@ -31,6 +31,7 @@ Ext.define('auscope.layer.querier.wfs.AuScopeParser', {
                 'auscope.layer.querier.wfs.factories.RemanentAnomalyFactory',
                 'auscope.layer.querier.wfs.factories.GnssStationFactory',
                 'auscope.layer.querier.wfs.factories.SurfaceAfterShockFactory',
+                'auscope.layer.querier.wfs.factories.RockPropertyFactory',
                 'portal.layer.querier.wfs.factories.SimpleFactory' //The simple factory should always go last
             ]
         });

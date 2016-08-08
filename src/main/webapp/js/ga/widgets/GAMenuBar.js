@@ -7,6 +7,8 @@ Ext.define('ga.widgets.GAMenuBar', {
     alias: 'widget.gamenubar',
 
     map: null,
+    knownLayerStore: null,
+    layerFactory: null,
     
     statics : {
         instructionManager : Ext.create('portal.util.help.InstructionManager', {}),
@@ -16,6 +18,8 @@ Ext.define('ga.widgets.GAMenuBar', {
         
         var me = this;
         me.map = config.map;
+        me.knownLayerStore = config.knownLayerStore;
+        me.layerFactory = config.layerFactory;
         
         // Create our Print Map handler         
         var printMapHandler = function() {   
@@ -58,9 +62,9 @@ Ext.define('ga.widgets.GAMenuBar', {
             Ext.util.CSS.removeStyleSheet('printCSSLink');    
         };        
     
-        //Create our Reset Map handler
+        // Create our Clear Map handler
         // revert to the default zoom level, map extent and remove all our layers
-        var resetMapHandler = function() {
+        var clearMapHandler = function() {
             me.map.map.zoomTo(4); 
             var center = new OpenLayers.LonLat(133.3, -26).transform('EPSG:4326', 'EPSG:3857');
             me.map.map.setCenter(center);
@@ -80,7 +84,32 @@ Ext.define('ga.widgets.GAMenuBar', {
                 localStorage.removeItem("portalStorageApplicationState");
                 localStorage.removeItem("portalStorageDefaultBaseLayer");
             }
-        };                    
+        };    
+    
+        // Create our Refresh Map handler
+        var refreshMapHandler = function() {
+            ActiveLayerManager.saveApplicationState(me.map);
+
+            // Refresh the whole browser window
+        	window.location.reload();
+        };
+        
+        var scannedMapsHandler = function() {
+            
+            clearMapHandler();
+            var id = "250K-scanned-geological-maps";
+                    
+            var knownLayer = me.knownLayerStore.getById(id);
+            var scannedMapsLayer = me.layerFactory.generateLayerFromKnownLayer(knownLayer);
+            knownLayer.set('layer', scannedMapsLayer);
+
+            var filterParams = {bbox: {"westBoundLongitude":"102","southBoundLatitude":"…157","northBoundLatitude":"-2","crs":"EPSG:4326"}, opacity: 1}
+            var filterer = scannedMapsLayer.get('filterer');
+            filterer.setParameters(filterParams);
+            var renderer = scannedMapsLayer.get('renderer');
+            renderer.displayData(scannedMapsLayer.getAllOnlineResources(),filterer,Ext.emptyFn);
+            ActiveLayerManager.addLayer(scannedMapsLayer);
+        }
         
         //Create our permalink generation handler
         var permalinkHandler = function() {
@@ -112,10 +141,6 @@ Ext.define('ga.widgets.GAMenuBar', {
                 title : 'Search Layer',
                 description : 'Allow you to filter through the layers via the layer\'s name. Enter a key and click the magnifying glass to filter'
             }),Ext.create('portal.util.help.Instruction', {
-                highlightEl : 'hh-filterDisplayedLayer-Featured',
-                title : 'Filter Display Layer Option',
-                description : 'Provide options to filter the list of displayed layers.'
-            }),Ext.create('portal.util.help.Instruction', {
                 highlightEl : 'latlng',
                 anchor : 'left',
                 title : 'Mouse Coordinate',
@@ -126,7 +151,7 @@ Ext.define('ga.widgets.GAMenuBar', {
                 title : 'Permanent Link',
                 description : 'Create a link that captures the current state of the user session.'
             }),Ext.create('portal.util.help.Instruction', {
-                highlightEl : 'hh-userGuide',
+                highlightEl : 'help-link',
                 anchor : 'left',
                 title : 'User guide',
                 description : 'For more information, refer to the user guide.'
@@ -142,10 +167,14 @@ Ext.define('ga.widgets.GAMenuBar', {
                 autoEl: {
                     tag: 'div',
                     html: '<ul>\
-                               <li><a href="http://www.geoscience.gov.au"><img src="img/home.png" width="16" height="16"/></a></li>\
-                               <li><a id="print-map-link" href="javascript:void(0)">PRINT MAP</a></li>\
-                               <li><a id="reset-map-link" href="javascript:void(0)">RESET MAP</a></li>\
-                               <li><a id="permanent-link" href="javascript:void(0)"> PERMANENT LINK </a> </li>\
+                               <li data-qtip="AusGIN Home"><a href="http://www.geoscience.gov.au"><img src="img/home.png" width="16" height="16"/></a></li>\
+                               <li data-qtip="Quick link for Scanned 250K Geological Maps"><a id="scanned-maps-link" href="javascript:void(0)">SCANNED 250K GEOLOGICAL MAPS</a></li>\
+                               <li data-qtip="Print the current map"><a id="print-map-link" href="javascript:void(0)">PRINT MAP</a></li>\
+                               <li data-qtip="Clear all active layers and recentre the map"><a id="clear-map-link" href="javascript:void(0)">CLEAR MAP</a></li>\
+                    		   <li data-qtip="Reload the page. All active Featured Layers (but not Custom Layers) will be reloaded into the map at the last zoom level. Use this to reactivate any buttons or menus that have frozen or disappeared.">\
+                               <a id="refresh-map-link" href="javascript:void(0)">REFRESH MAP</a></li>\
+                               <li data-qtip="Save the current map layers and zoom position as a URL link. Only Featured Layers (not Custom Layers) are saved in this URL."> \
+                               <a id="permanent-link" href="javascript:void(0)"> PERMANENT LINK </a> </li>\
                                <li><a id="help-link" href="javascript:void(0)"> HELP </a> </li>\
                                <span id="latlng"></span>\
                            </ul>'
@@ -156,7 +185,9 @@ Ext.define('ga.widgets.GAMenuBar', {
             listeners: {
                 render: function (view) {
                     Ext.get('print-map-link').on('click', printMapHandler);
-                    Ext.get('reset-map-link').on('click', resetMapHandler);  
+                    Ext.get('scanned-maps-link').on('click', scannedMapsHandler); 
+                    Ext.get('clear-map-link').on('click', clearMapHandler); 
+                    Ext.get('refresh-map-link').on('click', refreshMapHandler);  
                     Ext.get('permanent-link').on('click', permalinkHandler); 
                     Ext.get('help-link').on('click', helpHandler); 
                 }
@@ -166,6 +197,6 @@ Ext.define('ga.widgets.GAMenuBar', {
     
         this.callParent(arguments);
     
-    }
-
+    }    
+    
 });

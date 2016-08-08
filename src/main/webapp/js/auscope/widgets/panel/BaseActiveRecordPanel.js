@@ -62,20 +62,26 @@ Ext.define('portal.widgets.panel.BaseActiveRecordPanel', {
             },          
             columns : [{
                 text : 'Drag',
-                xtype : 'actioncolumn',
+                xtype : 'clickcolumn',
                 width: 32,
                 align: 'center',
-                icon : 'img/play_blue.png',
+                renderer: me._playRenderer,
                 sortable: false,
                 menuDisabled: true,
-                tooltip: 'Drag to re-order layers'
+                hasTip : true,
+                tipRenderer : function() {
+                  return 'Click to adjust transparency and/or query filters';
+                }
              },{
                 text : 'Name',
                 xtype : 'gridcolumn',
                 dataIndex : 'name',
                 flex : 1,
                 renderer: this._titleRenderer,
-                tooltip: 'Click for more options'
+                hasTip : true,
+                tipRenderer : function() {
+                  return 'Drag to re-order layers';
+                }              
             },{
                 text : 'info',
                 id : 'info',
@@ -144,9 +150,9 @@ Ext.define('portal.widgets.panel.BaseActiveRecordPanel', {
                 renderer: function (value, metadata, layer) {
                     var newSrc="src=\"";
                     if(layer.visible){
-                    	newSrc+=me.visibleIcon+'"';
+                        newSrc+=me.visibleIcon+'"';
                     }else{
-                    	newSrc+=me.notVisibleIcon+'"';
+                        newSrc+=me.notVisibleIcon+'"';
                     }
                     var img = metadata.value;
                     // Change the src="..." image using this regular expression - toggle between eye.png and eye-off.png
@@ -175,7 +181,7 @@ Ext.define('portal.widgets.panel.BaseActiveRecordPanel', {
                   ptype : 'rowexpandercontainer',
                   baseId : 'rowexpandercontainer-activelayers',
                   pluginId : 'maingrid_rowexpandercontainer',
-                  toggleColIndexes: [1],
+                  toggleColIndexes: [0,1],
                   generateContainer : function(layer, parentElId) {
                       //VT:if this is deserialized, we don't need to regenerate the layer
                       if(! layer) {
@@ -208,7 +214,7 @@ Ext.define('portal.widgets.panel.BaseActiveRecordPanel', {
         this.callParent(arguments);
     },
     
-	// Column Function
+    // Column Function
     _getLegendAction : function(layer){                       
         var legend = layer.get('renderer').getLegend();
         var text = 'Get Legend';
@@ -229,10 +235,18 @@ Ext.define('portal.widgets.panel.BaseActiveRecordPanel', {
                         var popupWindow = Ext.get(popupId);
                         if (!popupWindow) {
                             popupWindow = Ext.create('Ext.window.Window', {                        
-                                id          : 'legendPopup_' + layer.get('id'),
+                                id          : 'legendPopup',
                                 title       : 'Legend: '+ layer.get('name'),
-                                layout      : 'fit',
-                                items: form
+                                layout      : 'vbox',
+                                maxHeight   : Ext.get('center_region-map').getHeight(),
+                                autoScroll  : true,
+                                items: form,
+                                listeners: {
+                                    show: function() {
+                                        var container = Ext.get('center_region-map');
+                                        this.setPosition(container.getX()-1, container.getY()-1);
+                                    }
+                                },
                             }); 
                             popupWindow.show();
                         } 
@@ -256,15 +270,15 @@ Ext.define('portal.widgets.panel.BaseActiveRecordPanel', {
                         timeout : 180000,
                         scope : this,
                         success:function(response,opts){
-                            legend.getLegendComponent(onlineResources, filterer,response.responseText, Ext.bind(legendCallback, this, [layer], true));
+                            legend.getLegendComponent(onlineResources, filterer,response.responseText, true, Ext.bind(legendCallback, this, [layer], true), null, true);
                         },
                         failure: function(response, opts) {
-                            legend.getLegendComponent(onlineResources, filterer,"", Ext.bind(legendCallback, this, [layer], true));
-                        }                        
+                            legend.getLegendComponent(onlineResources, filterer,"", true, Ext.bind(legendCallback, this, [layer], true));
+                        }
                     });
                 
                 }else{
-                    legend.getLegendComponent(onlineResources, filterer,"", Ext.bind(legendCallback, this, [layer], true));
+                    legend.getLegendComponent(onlineResources, filterer,"", true, Ext.bind(legendCallback, this, [layer], true), layer.get('source').get('staticLegendUrl'), true);
                 }
                 
             }
@@ -273,7 +287,7 @@ Ext.define('portal.widgets.panel.BaseActiveRecordPanel', {
         return getLegendAction;
     },
     
-	// Column Function
+    // Column Function
     _setVisibilityAction : function(layer){
 //        var me = this;
         var visibleLayerAction = new Ext.Action({
@@ -308,4 +322,14 @@ Ext.define('portal.widgets.panel.BaseActiveRecordPanel', {
         
         return panel
     },
+    
+    _playRenderer : function () {
+      return Ext.DomHelper.markup({
+        tag : 'img',
+        width : 16,
+        height : 16,
+        src: 'portal-core/img/play_blue.png'
+    });
+      
+    }
 });

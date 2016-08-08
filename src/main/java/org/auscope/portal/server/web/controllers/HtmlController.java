@@ -12,9 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.auscope.portal.core.server.PortalPropertyPlaceholderConfigurer;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -30,21 +28,16 @@ public class HtmlController {
 
     private final Log logger = LogFactory.getLog(getClass());
 
-    @Autowired
-    @Qualifier(value = "propertyConfigurer")
-    private PortalPropertyPlaceholderConfigurer hostConfigurer;
-
     @RequestMapping("/gmap.html")
-    public ModelAndView gmap() {
-        String googleKey = hostConfigurer.resolvePlaceholder("HOST.googlemap.key");
-        String vocabServiceUrl = hostConfigurer.resolvePlaceholder("HOST.vocabService.url");
-        String maxFeatureValue = hostConfigurer.resolvePlaceholder("HOST.maxFeatures.value");
-        String analyticKey = hostConfigurer.resolvePlaceholder("HOST.google.analytics.key");
-        String piwikSiteId = hostConfigurer.resolvePlaceholder("HOST.piwik.site.id");               
-        String buildVersion = hostConfigurer.resolvePlaceholder("portal.build.version");
-        String buildTimestamp = hostConfigurer.resolvePlaceholder("portal.build.date.timestamp");
-        int buildTimestampHashcode = buildTimestamp.hashCode();
+    public ModelAndView gmap(@Value("${HOST.googlemap.key}") String googleKey,
+            @Value("${HOST.vocabService.url}") String vocabServiceUrl,
+            @Value("${HOST.maxFeatures.value}") String maxFeatureValue,
+            @Value("${HOST.google.analytics.key:}") String analyticKey,
+            @Value("${HOST.piwik.site.id:}") String piwikSiteId,
+            @Value("${portal.build.version}") String buildVersion,
+            @Value("${portal.build.date.timestamp}") String buildTimestamp) {
 
+		int buildTimestampHashcode = buildTimestamp.hashCode();
         String localhost = null;
         try {
             localhost = InetAddress.getLocalHost().getCanonicalHostName();
@@ -82,8 +75,7 @@ public class HtmlController {
     }
 
     @RequestMapping("/mosaic_image.html")
-    public ModelAndView mosaic_image() {
-        String googleKey = hostConfigurer.resolvePlaceholder("HOST.googlemap.key");
+    public ModelAndView mosaic_image(@Value("${HOST.googlemap.key}") String googleKey) {
         logger.debug(googleKey);
 
         ModelAndView mav = new ModelAndView("mosaic_image");
@@ -92,8 +84,7 @@ public class HtmlController {
     }
 
     @RequestMapping("/plotted_images.html")
-    public ModelAndView plotted_images() {
-        String googleKey = hostConfigurer.resolvePlaceholder("HOST.googlemap.key");
+    public ModelAndView plotted_images(@Value("${HOST.googlemap.key}") String googleKey) {
         logger.debug(googleKey);
 
         ModelAndView mav = new ModelAndView("plotted_images");

@@ -200,7 +200,7 @@ Ext.define('ga.widgets.GAOnlineResourcesPanel', {
                 tag : 'div',
                 children : [{ 
                     	tag: 'span',
-                    	html : rowLabelTitle +  name
+                    	html : rowLabelTitle +  description
                     },
                     {
                         tag : 'br'

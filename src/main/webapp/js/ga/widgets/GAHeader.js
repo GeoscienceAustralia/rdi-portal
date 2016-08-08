@@ -9,6 +9,7 @@ Ext.define('ga.widgets.GAHeader', {
     map: null,
     registryStore: null,
     layerFactory: null,
+    knownLayerStore: null,
 
     constructor : function(config){   
         
@@ -16,6 +17,7 @@ Ext.define('ga.widgets.GAHeader', {
         me.map = config.map;
         me.registryStore = config.registryStore;    
         me.layerFactory = config.layerFactory;
+        me.knownLayerStore = config.knownLayerStore;
         
         //Create our advanced search control handler
         var advancedSearchLinkHandler = function() {
@@ -243,8 +245,8 @@ Ext.define('ga.widgets.GAHeader', {
                     tag: 'div',
                     html: 
                          '<ul>\
-                              <li><a href="mailto:geoscience-portal-aws@ga.gov.au">Contact Us</a></li>\
-                              <li><a href="#auscope-tabs-panel">Skip to Content</a></li>\
+                              <li><a href="mailto:rdi-portal-aws@ga.gov.au">Contact Us</a></li>\
+                              <li><a href="http://www.geoscience.gov.au/Geoscience_Portal_User_Guide.pdf" target="_blank">User Guide</a></li>\
                           </ul> '   
                 }       
             }]    
@@ -262,7 +264,9 @@ Ext.define('ga.widgets.GAHeader', {
         // south panel contains the menu bar
         var southPanel = {
             xtype: 'gamenubar',
-            map: me.map
+            map: me.map,
+            knownLayerStore: me.knownLayerStore,
+            layerFactory: me.layerFactory
         };
 
         Ext.apply(config, {

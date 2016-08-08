@@ -26,10 +26,11 @@ public class EarthResourcesDownloadController extends BasePortalController {
 
     // ----------------------------------------------------- Instance variables
 
+	public static final String MINERAL_OCCURRENCE_VIEW_FEATURE_TYPE = "mo:MinOccView";
+	
     private MineralOccurrenceDownloadService mineralOccurrenceDownloadService;
     private MineralOccurrenceService mineralOccurrenceService;
 
-    public static final String MIN_OCCUR_VIEW_TYPE = "mo:MinOccView";
 
     private final Log log = LogFactory.getLog(getClass());
 
@@ -263,6 +264,7 @@ public class EarthResourcesDownloadController extends BasePortalController {
             @RequestParam(required = false, value = "minReserves") String minReserves,
             @RequestParam(required = false, value = "minReserves") String minResources,
             @RequestParam(required = false, value = "bbox") String bboxJson,
+            @RequestParam(required = false, value = "outputFormat") String outputFormat,
             @RequestParam(required = false, value = "maxFeatures", defaultValue = "0") int maxFeatures)
             throws Exception {
 
@@ -278,8 +280,8 @@ public class EarthResourcesDownloadController extends BasePortalController {
         response.setContentType("text/xml");
         OutputStream outputStream = response.getOutputStream();
 
-        InputStream results = this.mineralOccurrenceDownloadService.downloadWFS(serviceUrl, MIN_OCCUR_VIEW_TYPE,
-                filter, maxFeatures);
+        InputStream results = this.mineralOccurrenceDownloadService.downloadMineralOccurrenceView(serviceUrl,
+                filter, maxFeatures, outputFormat);
         FileIOUtil.writeInputToOutputStream(results, outputStream, 8 * 1024, true);
         outputStream.close();
 

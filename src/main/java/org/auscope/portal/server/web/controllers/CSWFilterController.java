@@ -372,7 +372,13 @@ public class CSWFilterController extends BaseCSWController {
         filter.setKeywords(keywords);
         
         filter.setTitleOrAbstract(titleOrAbstract != null ? titleOrAbstract.trim() : null);
-        filter.setAuthorSurname(authorSurname != null ? authorSurname.trim() : null);
+        
+		// TODO Temporary work around for GPT-81. GA's eCat Geonetwork doesn't have an authorSurname for us to query so in that case we default to using the authorSurname on anyText.
+		if (parameters.get("cswServiceId") != null && parameters.get("cswServiceId").equals("cswGARegistry")) {
+			filter.setAnyText(authorSurname != null ? authorSurname.trim() : null);
+		} else {
+			filter.setAuthorSurname(authorSurname != null ? authorSurname.trim() : null);
+		}
 
         filter.setPublicationDateFrom(
                 publicationDateFrom != null ? stringYearToDate(publicationDateFrom.trim(), false) : null);

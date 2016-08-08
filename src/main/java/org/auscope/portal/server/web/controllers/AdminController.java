@@ -9,7 +9,6 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.auscope.portal.core.server.OgcServiceProviderType;
-import org.auscope.portal.core.server.PortalPropertyPlaceholderConfigurer;
 import org.auscope.portal.core.services.admin.AdminDiagnosticResponse;
 import org.auscope.portal.core.services.admin.EndpointAndSelector;
 import org.auscope.portal.core.services.csw.CSWServiceItem;
@@ -18,6 +17,7 @@ import org.auscope.portal.core.view.JSONView;
 import org.auscope.portal.server.web.service.AuScopeAdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,7 +26,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 /**
  * Provides a controller interface into some basic administration functionality/tests
- * 
+ *
  * @author Josh Vote
  *
  */
@@ -38,7 +38,6 @@ public class AdminController {
     /** For accessing the various CSW's */
     private List<CSWServiceItem> cswServiceList;
     /** for checking config options */
-    private PortalPropertyPlaceholderConfigurer portalProperties;
     /** for actually performing diagnostics */
     private AuScopeAdminService adminService;
 
@@ -47,9 +46,7 @@ public class AdminController {
      */
     @Autowired
     public AdminController(@Qualifier(value = "cswServiceList") ArrayList cswServiceList,
-            PortalPropertyPlaceholderConfigurer portalProperties,
             AuScopeAdminService adminService) {
-        this.portalProperties = portalProperties;
         this.adminService = adminService;
         this.cswServiceList = new ArrayList<CSWServiceItem>();
         for (int i = 0; i < cswServiceList.size(); i++) {
@@ -59,7 +56,7 @@ public class AdminController {
 
     /**
      * Generates a ModelAndView JSON response with the specified params
-     * 
+     *
      * @param response
      *            a response from the AdminService
      * @return
@@ -79,7 +76,7 @@ public class AdminController {
 
     /**
      * Performs an external connectivity test through the HttpServiceCaller
-     * 
+     *
      * @return
      * @throws MalformedURLException
      *             Should never occur
@@ -97,7 +94,7 @@ public class AdminController {
 
     /**
      * Performs an external connectivity test to the various CSW's through the HttpServiceCaller
-     * 
+     *
      * @return
      */
     @RequestMapping("/testCSWConnectivity.diag")
@@ -108,14 +105,13 @@ public class AdminController {
 
     /**
      * Tests that the Vocabulary service is up and running
-     * 
+     *
      * @return
      */
     @RequestMapping("/testVocabulary.diag")
-    public ModelAndView testVocabulary() throws Exception {
+    public ModelAndView testVocabulary(@Value("${HOST.vocabService.url}") String vocabServiceUrl) throws Exception {
 
         //Has the user setup the portal with a valid vocabulary service?
-        String vocabServiceUrl = portalProperties.resolvePlaceholder("HOST.vocabService.url");
         try {
             new URL(vocabServiceUrl);
         } catch (Exception ex) {
@@ -164,7 +160,7 @@ public class AdminController {
      * Any duplicated serviceUrl + typename combos will be culled
      *
      * This method is intentionally avoiding the WFSService to focus on the WFS request/response (ignoring the XSLT pipeline)
-     * 
+     *
      * @return
      * @throws URISyntaxException
      */
@@ -195,7 +191,7 @@ public class AdminController {
      * Tests that all serviceUrls + layerNames are accessible via WMS. There must be a 1-1 correspondence between serviceUrls and layerNames
      *
      * Any duplicated serviceUrl + layer name combos will be culled
-     * 
+     *
      * @return
      * @throws URISyntaxException
      */

@@ -13,6 +13,10 @@
 <script src="js/ga/widgets/GAHeader.js?v=${buildTimestamp}" type="text/javascript"></script>
 <script src="js/ga/widgets/GAMenuBar.js?v=${buildTimestamp}" type="text/javascript"></script>
 <script src="js/ga/widgets/GAFooter.js?v=${buildTimestamp}" type="text/javascript"></script>
+<script src="js/ga/widgets/GADeserializationHandler.js?v=${buildTimestamp}" type="text/javascript"></script>
+<script src="js/ga/widgets/GAWMSCustomSearchField.js?v=${buildTimestamp}" type="text/javascript"></script>
+
+<script src="js/ga/store/AreaMapStore.js?v=${buildTimestamp}" type="text/javascript"></script>
 
 <!-- GA OpenLayers map wrapper -->
 <script src="js/ga/map/openlayers/GAOpenLayersMap.js?v=${buildTimestamp}" type="text/javascript"></script>
@@ -25,6 +29,9 @@
 <!-- script src="js/auscope/widgets/panel/ActiveLayersDisplayPanel.js?v=${buildTimestamp}" type="text/javascript"></script -->
 <script src="js/auscope/widgets/panel/BaseActiveRecordPanel.js?v=${buildTimestamp}" type="text/javascript"></script>
 <script src="js/auscope/widgets/panel/ActiveLayerPanel.js?v=${buildTimestamp}" type="text/javascript"></script>
+<script src="js/auscope/widgets/panel/GABaseRecordPanel.js?v=${buildTimestamp}" type="text/javascript"></script>
+<script src="js/auscope/widgets/panel/GAKnownLayerPanel.js?v=${buildTimestamp}" type="text/javascript"></script>
+
 
 <script src="js/auscope/layer/AuScopeDownloaderFactory.js?v=${buildTimestamp}" type="text/javascript"></script>
 <script src="js/auscope/layer/AuScopeQuerierFactory.js?v=${buildTimestamp}" type="text/javascript"></script>
@@ -57,6 +64,7 @@
 <script src="js/auscope/layer/filterer/forms/CapdfHydroGeoChemFilterForm.js?v=${buildTimestamp}" type="text/javascript"></script>
 <script src="js/auscope/layer/filterer/forms/TimaGeoSampleFilterForm.js?v=${buildTimestamp}" type="text/javascript"></script>
 <script src="js/auscope/layer/filterer/forms/DisjunctedLayersForm.js?v=${buildTimestamp}" type="text/javascript"></script>
+<script src="js/auscope/layer/filterer/forms/ScannedGeologicalMapFilterForm.js?v=${buildTimestamp}" type="text/javascript"></script>
 
 <script src="js/auscope/layer/querier/wfs/factories/BoreholeFactory.js?v=${buildTimestamp}" type="text/javascript"></script>
 <script src="js/auscope/layer/querier/wfs/factories/SF0BoreholeFactory.js?v=${buildTimestamp}" type="text/javascript"></script>
@@ -72,6 +80,7 @@
 <script src="js/auscope/layer/querier/wfs/factories/LocatedSpecimenFactory.js?v=${buildTimestamp}" type="text/javascript"></script>
 <script src="js/auscope/layer/querier/wfs/factories/SamplingFeatureCollectionFactory.js?v=${buildTimestamp}" type="text/javascript"></script>
 <script src="js/auscope/layer/querier/wfs/factories/SurfaceAfterShockFactory.js?v=${buildTimestamp}" type="text/javascript"></script>
+<script src="js/auscope/layer/querier/wfs/factories/RockPropertyFactory.js?v=${buildTimestamp}" type="text/javascript"></script>
 <script src="js/auscope/layer/querier/wfs/AuScopeParser.js?v=${buildTimestamp}" type="text/javascript"></script>
 
 <script src="js/auscope/layer/querier/wfs/knownlayerfactories/NVCLFactory.js?v=${buildTimestamp}" type="text/javascript"></script>

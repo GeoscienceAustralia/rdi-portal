@@ -58,7 +58,7 @@ Ext.define('auscope.layer.AuScopeRendererFactory', {
                 proxyCountUrl : proxyCountUrl
             });
         } else if (wmsResources.length > 0) {
-            return Ext.create('portal.layer.renderer.wms.LayerRenderer', {map : this.map});
+            return Ext.create('portal.layer.renderer.wms.LayerRenderer', {map : this.map, tryGetCapabilitiesFirst : true});
         } else if (wfsResources.length > 0) {
             return Ext.create('portal.layer.renderer.wfs.FeatureRenderer', {
                 map : this.map,
