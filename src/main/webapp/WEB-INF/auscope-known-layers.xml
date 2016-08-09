@@ -2315,5 +2315,4 @@ The coastal boundary for the Great Barrier Reef World Heritage Area is interim. 
 		<property name="group" value="Rock Properties" />
 		<property name="order" value="95 Rock Properties 110" />
 	</bean>
->>>>>>> 5937de3... Updated RDI portal from current Geoscience Portal base. Added new RDI layers into config.
 </beans>
