@@ -42,13 +42,6 @@
         <constructor-arg name="serviceUrl" value="http://test.portal.geoscience.gov.au/geonetwork/srv/eng/csw-gsq"/>
         <constructor-arg name="recordInformationUrl" value="/geonetwork/srv/eng/catalog.search#/metadata/%1$s"/>
     </bean>
-    
-     <bean id="cswGsq" class="org.auscope.portal.core.services.csw.CSWServiceItem">
-        <constructor-arg name="id" value="cswGsq"/>
-        <constructor-arg name="title" value="Geological Survey of Queensland"/>
-        <constructor-arg name="serviceUrl" value="http://localhost:8080/geonetwork/srv/eng/csw-gsq"/>
-        <constructor-arg name="recordInformationUrl" value="/geonetwork/srv/eng/catalog.search#/metadata/%1$s"/>
-    </bean>
 
     <bean id="cswGsv" class="org.auscope.portal.core.services.csw.CSWServiceItem">
         <constructor-arg name="id" value="cswGsv"/>
