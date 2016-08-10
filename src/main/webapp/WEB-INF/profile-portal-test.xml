@@ -21,7 +21,7 @@
             	<ref bean="knownTypeCommonwealth_Marine_Regions" />
             	<ref bean="knownTypeVegetationCultivatedAreas" />
             	<ref bean="knownTypeVegetationNativeVegetationAreas" />
-            	<ref bean="knownTypeSurface_Catchment" />
+            	<ref bean="knownTypeSurfaceCatchment" />
             	<ref bean="knownTypeHydrographyLakes" />
             	<ref bean="knownTypeInfrastructureFences" />
             	<ref bean="knownTypeInfrastructureMarineInfrastructureLines" />

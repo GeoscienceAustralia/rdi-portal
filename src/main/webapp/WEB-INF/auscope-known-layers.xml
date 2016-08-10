@@ -111,14 +111,14 @@
         <property name="order" value="10_RDI" />
     </bean>
 
-    <bean id="knownTypeSurface_Catchment" class="org.auscope.portal.core.view.knownlayer.KnownLayer">
+    <bean id="knownTypeSurfaceCatchment" class="org.auscope.portal.core.view.knownlayer.KnownLayer">
         <constructor-arg name="id" value="Surface_Catchment"/>
         <constructor-arg name="knownLayerSelector">
             <bean class="org.auscope.portal.core.view.knownlayer.WMSSelector">
-                <constructor-arg name="layerName" value="Surface_Catchment"/>
+                <constructor-arg name="layerName" value="ahgf_shcatch:Surface_Catchment"/>
             </bean>
         </constructor-arg>
-        <property name="name" value="Surface_Catchment"/>
+        <property name="name" value="Surface Catchment"/>
         <property name="description" value=""/>
         <property name="proxyUrl" value=""/>
         <property name="proxyCountUrl" value=""/>
