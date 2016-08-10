@@ -41,14 +41,7 @@
                 <ref bean="knownTypeMajorPorts" />
                 
                 <ref bean="knownTypeMineralOccurrenceView" />
-                
-                <ref bean="knownTypeAster" />
-                <ref bean="knownTypeAsterAloh" />
-                <ref bean="knownTypeAsterFerrous" />
-                <ref bean="knownTypeAsterOpaque" />
-                <ref bean="knownTypeAsterFerricOxideContent" />
-                <ref bean="knownTypeAsterFeoh" />
-                
+                                
                 <!-- National Geophysical Datasets -->
                 <ref bean="knownTypeOnshoreSeismicSurveys" />
                 <ref bean="knownTypeAirborneSurveys2014" />
