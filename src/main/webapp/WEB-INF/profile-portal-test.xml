@@ -14,19 +14,18 @@
             <list>
             
             	<!--  RDI LAYERS -->
-            	<ref bean="knownTypeLandCoverClass" />
-            	<ref bean="knownTypeDirectoryOfImportantWetlandsInAustralia" />
-            	<ref bean="knownTypeNational_Heritage_List_Australia" />
-            	<ref bean="knownTypeKey_Ecological_Features" />
-            	<ref bean="knownTypeCommonwealth_Marine_Regions" />
+            	<ref bean="knownTypeLandCover" />
+            	<ref bean="knownTypeImportantWetlands" />
+            	<ref bean="knownTypeNationalHeritageList" />
+            	<ref bean="knownTypeKeyEcologicalFeatures" />
+            	<ref bean="knownTypeCommonwealthMarineRegions" />
             	<ref bean="knownTypeVegetationCultivatedAreas" />
             	<ref bean="knownTypeVegetationNativeVegetationAreas" />
             	<ref bean="knownTypeSurfaceCatchment" />
             	<ref bean="knownTypeHydrographyLakes" />
-            	<ref bean="knownTypeInfrastructureFences" />
-            	<ref bean="knownTypeInfrastructureMarineInfrastructureLines" />
-            	<ref bean="knownTypeInfrastructureMarineInfrastructurePoints" />
-            	<ref bean="knownTypeInfrastructureMineAreas" />
+            	<ref bean="knownTypeFences" />
+            	<ref bean="knownTypeMarineInfrastructure" />
+            	<ref bean="knownTypeMineAreas" />
             	
                 <!-- Restricted Areas -->
                 <ref bean="knownTypeProtectedAreasCAPAD2014Marine" />
