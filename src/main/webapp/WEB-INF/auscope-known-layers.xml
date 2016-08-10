@@ -6,79 +6,79 @@
       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
 	
 	
-    <bean id="knownTypeLandCoverClass" class="org.auscope.portal.core.view.knownlayer.KnownLayer">
-        <constructor-arg name="id" value="landCoverClass"/>
+    <bean id="knownTypeLandCover" class="org.auscope.portal.core.view.knownlayer.KnownLayer">
+        <constructor-arg name="id" value="landCover"/>
         <constructor-arg name="knownLayerSelector">
             <bean class="org.auscope.portal.core.view.knownlayer.WMSSelector">
-                <constructor-arg name="layerName" value="LandCoverClass"/>
+                <constructor-arg name="layerName" value="Land Cover Class"/>
             </bean>
         </constructor-arg>
-        <property name="name" value="Land Cover Class"/>
+        <property name="name" value="Land Cover"/>
         <property name="description" value=""/>
         <property name="proxyUrl" value=""/>
         <property name="proxyCountUrl" value=""/>
-        <property name="group" value="RDI"/>
-        <property name="order" value="10_RDI" />
+        <property name="group" value="Land Use"/>
+        <property name="order" value="10_Land Use_01" />
     </bean>
 
-    <bean id="knownTypeDirectoryOfImportantWetlandsInAustralia" class="org.auscope.portal.core.view.knownlayer.KnownLayer">
-        <constructor-arg name="id" value="directoryOfImportantWetlandsInAustralia"/>
+    <bean id="knownTypeImportantWetlands" class="org.auscope.portal.core.view.knownlayer.KnownLayer">
+        <constructor-arg name="id" value="importantWetlands"/>
         <constructor-arg name="knownLayerSelector">
             <bean class="org.auscope.portal.core.view.knownlayer.WMSSelector">
-                <constructor-arg name="layerName" value="wetland"/>
+                <constructor-arg name="layerName" value="Directory of Important Wetlands in Australia"/>
             </bean>
         </constructor-arg>
-        <property name="name" value="Directory of Important Wetlands in Australia"/>
+        <property name="name" value="Important Wetlands"/>
         <property name="description" value=""/>
         <property name="proxyUrl" value=""/>
         <property name="proxyCountUrl" value=""/>
-        <property name="group" value="RDI"/>
-        <property name="order" value="10_RDI" />
+        <property name="group" value="Land Use"/>
+        <property name="order" value="10_Land Use_02" />
     </bean>
 
-    <bean id="knownTypeNational_Heritage_List_Australia" class="org.auscope.portal.core.view.knownlayer.KnownLayer">
-        <constructor-arg name="id" value="National_Heritage_List_Australia"/>
+    <bean id="knownTypeNationalHeritageList" class="org.auscope.portal.core.view.knownlayer.KnownLayer">
+        <constructor-arg name="id" value="nationalHeritageList"/>
         <constructor-arg name="knownLayerSelector">
             <bean class="org.auscope.portal.core.view.knownlayer.WMSSelector">
                 <constructor-arg name="layerName" value="National_Heritage_List_Australia"/>
             </bean>
         </constructor-arg>
-        <property name="name" value="National_Heritage_List_Australia"/>
+        <property name="name" value="National Heritage List"/>
         <property name="description" value=""/>
         <property name="proxyUrl" value=""/>
         <property name="proxyCountUrl" value=""/>
-        <property name="group" value="RDI"/>
-        <property name="order" value="10_RDI" />
+        <property name="group" value="Land Use"/>
+        <property name="order" value="10_Land Use_03" />
     </bean>
 
-    <bean id="knownTypeKey_Ecological_Features" class="org.auscope.portal.core.view.knownlayer.KnownLayer">
-        <constructor-arg name="id" value="Key_Ecological_Features"/>
+    <bean id="knownTypeKeyEcologicalFeatures" class="org.auscope.portal.core.view.knownlayer.KnownLayer">
+        <constructor-arg name="id" value="keyEcologicalFeatures"/>
         <constructor-arg name="knownLayerSelector">
             <bean class="org.auscope.portal.core.view.knownlayer.WMSSelector">
                 <constructor-arg name="layerName" value="Key_Ecological_Features"/>
             </bean>
         </constructor-arg>
-        <property name="name" value="Key_Ecological_Features"/>
+        <property name="name" value="Key Ecological Features"/>
         <property name="description" value=""/>
         <property name="proxyUrl" value=""/>
         <property name="proxyCountUrl" value=""/>
-        <property name="group" value="RDI"/>
-        <property name="order" value="10_RDI" />
+        <property name="group" value="Land Use"/>
+        <property name="order" value="10_Land Use_04" />
     </bean>
 
-    <bean id="knownTypeCommonwealth_Marine_Regions" class="org.auscope.portal.core.view.knownlayer.KnownLayer">
-        <constructor-arg name="id" value="Commonwealth_Marine_Regions"/>
+    <bean id="knownTypeCommonwealthMarineRegions" class="org.auscope.portal.core.view.knownlayer.KnownLayer">
+        <constructor-arg name="id" value="commonwealthMarineRegions"/>
         <constructor-arg name="knownLayerSelector">
             <bean class="org.auscope.portal.core.view.knownlayer.WMSSelector">
                 <constructor-arg name="layerName" value="Commonwealth_Marine_Regions"/>
             </bean>
         </constructor-arg>
-        <property name="name" value="Commonwealth_Marine_Regions"/>
+        <property name="name" value="Commonwealth Marine Regions"/>
         <property name="description" value=""/>
         <property name="proxyUrl" value=""/>
         <property name="proxyCountUrl" value=""/>
-        <property name="group" value="RDI"/>
-        <property name="order" value="10_RDI" />
+        <property name="group" value="Land Use"/>
+        <property name="order" value="10_Land Use_05" />
     </bean>
 
     <bean id="knownTypeVegetationCultivatedAreas" class="org.auscope.portal.core.view.knownlayer.KnownLayer">
@@ -88,12 +88,12 @@
                 <constructor-arg name="layerName" value="Vegetation:cultivatedareas"/>
             </bean>
         </constructor-arg>
-        <property name="name" value="Vegetation:cultivatedareas"/>
+        <property name="name" value="Cultivated Areas"/>
         <property name="description" value=""/>
         <property name="proxyUrl" value=""/>
         <property name="proxyCountUrl" value=""/>
-        <property name="group" value="RDI"/>
-        <property name="order" value="10_RDI" />
+        <property name="group" value="Land Use"/>
+        <property name="order" value="10_Land Use_06" />
     </bean>
 
     <bean id="knownTypeVegetationNativeVegetationAreas" class="org.auscope.portal.core.view.knownlayer.KnownLayer">
@@ -103,27 +103,35 @@
                 <constructor-arg name="layerName" value="Vegetation:nativevegetationareas"/>
             </bean>
         </constructor-arg>
-        <property name="name" value="Vegetation:nativevegetationareas"/>
+        <property name="name" value="Native Vegetation Areas"/>
         <property name="description" value=""/>
         <property name="proxyUrl" value=""/>
         <property name="proxyCountUrl" value=""/>
-        <property name="group" value="RDI"/>
-        <property name="order" value="10_RDI" />
+        <property name="group" value="Land Use"/>
+        <property name="order" value="10_Land Use_07" />
     </bean>
 
     <bean id="knownTypeSurfaceCatchment" class="org.auscope.portal.core.view.knownlayer.KnownLayer">
         <constructor-arg name="id" value="Surface_Catchment"/>
         <constructor-arg name="knownLayerSelector">
-            <bean class="org.auscope.portal.core.view.knownlayer.WMSSelector">
-                <constructor-arg name="layerName" value="ahgf_shcatch:Surface_Catchment"/>
+            <bean class="org.auscope.portal.core.view.knownlayer.WMSSelectors">
+                <constructor-arg name="layersMode" value="AND" />
+                <constructor-arg name="layerNames">
+                    <list>
+                        <value>ahgf_shcatch:AHGFCatchment</value>
+                        <value>ahgf_shcatch:NCBLevel1DrainageDivision</value>
+                        <value>ahgf_shcatch:NCBLevel2DrainageBasinGroup</value>
+                    </list>
+                </constructor-arg>
+              
             </bean>
         </constructor-arg>
         <property name="name" value="Surface Catchment"/>
         <property name="description" value=""/>
         <property name="proxyUrl" value=""/>
         <property name="proxyCountUrl" value=""/>
-        <property name="group" value="RDI"/>
-        <property name="order" value="10_RDI" />
+        <property name="group" value="Land Use"/>
+        <property name="order" value="10_Land Use_08" />
     </bean>
 
     <bean id="knownTypeHydrographyLakes" class="org.auscope.portal.core.view.knownlayer.KnownLayer">
@@ -133,72 +141,64 @@
                 <constructor-arg name="layerName" value="Hydrography:lakes"/>
             </bean>
         </constructor-arg>
-        <property name="name" value="Hydrography:lakes"/>
+        <property name="name" value="Lakes"/>
         <property name="description" value=""/>
         <property name="proxyUrl" value=""/>
         <property name="proxyCountUrl" value=""/>
-        <property name="group" value="RDI"/>
-        <property name="order" value="10_RDI" />
+        <property name="group" value="Land Use"/>
+        <property name="order" value="10_Land Use_09" />
     </bean>
 
-    <bean id="knownTypeInfrastructureFences" class="org.auscope.portal.core.view.knownlayer.KnownLayer">
-        <constructor-arg name="id" value="InfrastructureFences"/>
+    <bean id="knownTypeFences" class="org.auscope.portal.core.view.knownlayer.KnownLayer">
+        <constructor-arg name="id" value="fences"/>
         <constructor-arg name="knownLayerSelector">
             <bean class="org.auscope.portal.core.view.knownlayer.WMSSelector">
                 <constructor-arg name="layerName" value="Infrastructure:fences"/>
             </bean>
         </constructor-arg>
-        <property name="name" value="Infrastructure:fences"/>
+        <property name="name" value="Fences"/>
         <property name="description" value=""/>
         <property name="proxyUrl" value=""/>
         <property name="proxyCountUrl" value=""/>
-        <property name="group" value="RDI"/>
-        <property name="order" value="10_RDI" />
+        <property name="group" value="Land Use"/>
+        <property name="order" value="10_Land Use_10" />
     </bean>
 
-    <bean id="knownTypeInfrastructureMarineInfrastructureLines" class="org.auscope.portal.core.view.knownlayer.KnownLayer">
-        <constructor-arg name="id" value="InfrastructureMarineInfrastructureLines"/>
+    <bean id="knownTypeMarineInfrastructure" class="org.auscope.portal.core.view.knownlayer.KnownLayer">
+        <constructor-arg name="id" value="marineInfrastructure"/>
         <constructor-arg name="knownLayerSelector">
-            <bean class="org.auscope.portal.core.view.knownlayer.WMSSelector">
-                <constructor-arg name="layerName" value="Infrastructure:marineinfrastructurelines"/>
+            <bean class="org.auscope.portal.core.view.knownlayer.WMSSelectors">
+                <constructor-arg name="layersMode" value="AND" />
+                <constructor-arg name="layerNames">
+                    <list>
+                        <value>Infrastructure:marineinfrastructurelines</value>
+                        <value>Infrastructure:marineinfrastructurepoints</value>
+                    </list>
+                </constructor-arg>
+              
             </bean>
         </constructor-arg>
-        <property name="name" value="Infrastructure:marineinfrastructurelines"/>
+        <property name="name" value="Marine infrastructure"/>
         <property name="description" value=""/>
         <property name="proxyUrl" value=""/>
         <property name="proxyCountUrl" value=""/>
-        <property name="group" value="RDI"/>
-        <property name="order" value="10_RDI" />
+        <property name="group" value="Land Use"/>
+        <property name="order" value="10_Land Use_11" />
     </bean>
 
-    <bean id="knownTypeInfrastructureMarineInfrastructurePoints" class="org.auscope.portal.core.view.knownlayer.KnownLayer">
-        <constructor-arg name="id" value="InfrastructureMarineInfrastructurePoints"/>
-        <constructor-arg name="knownLayerSelector">
-            <bean class="org.auscope.portal.core.view.knownlayer.WMSSelector">
-                <constructor-arg name="layerName" value="Infrastructure:marineinfrastructurepoints"/>
-            </bean>
-        </constructor-arg>
-        <property name="name" value="Infrastructure:marineinfrastructurepoints"/>
-        <property name="description" value=""/>
-        <property name="proxyUrl" value=""/>
-        <property name="proxyCountUrl" value=""/>
-        <property name="group" value="RDI"/>
-        <property name="order" value="10_RDI" />
-    </bean>
-
-    <bean id="knownTypeInfrastructureMineAreas" class="org.auscope.portal.core.view.knownlayer.KnownLayer">
-        <constructor-arg name="id" value="infrastructureMineAreas"/>
+    <bean id="knownTypeMineAreas" class="org.auscope.portal.core.view.knownlayer.KnownLayer">
+        <constructor-arg name="id" value="mineAreas"/>
         <constructor-arg name="knownLayerSelector">
             <bean class="org.auscope.portal.core.view.knownlayer.WMSSelector">
                 <constructor-arg name="layerName" value="Infrastructure:mineareas"/>
             </bean>
         </constructor-arg>
-        <property name="name" value="Infrastructure:mineareas"/>
+        <property name="name" value="Mine areas"/>
         <property name="description" value=""/>
         <property name="proxyUrl" value=""/>
         <property name="proxyCountUrl" value=""/>
-        <property name="group" value="RDI"/>
-        <property name="order" value="10_RDI" />
+        <property name="group" value="Land Use"/>
+        <property name="order" value="10_Land Use_12" />
     </bean>
 	
 	
