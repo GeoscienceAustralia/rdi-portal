@@ -26,6 +26,8 @@
             	<ref bean="knownTypeFences" />
             	<ref bean="knownTypeMarineInfrastructure" />
             	<ref bean="knownTypeMineAreas" />
+                
+                <ref bean="knownTypeNSWStateForest" />
             	
                 <!-- Restricted Areas -->
                 <ref bean="knownTypeProtectedAreasCAPAD2014Marine" />

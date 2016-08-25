@@ -201,7 +201,20 @@
         <property name="order" value="10_Land Use_12" />
     </bean>
 	
-	
+	<bean id="knownTypeNSWStateForest" class="org.auscope.portal.core.view.knownlayer.KnownLayer">
+        <constructor-arg name="id" value="stateForestNSW"/>
+        <constructor-arg name="knownLayerSelector">
+            <bean class="org.auscope.portal.core.view.knownlayer.WMSSelector">
+                <constructor-arg name="layerName" value="StateForest"/>
+            </bean>
+        </constructor-arg>
+        <property name="name" value="NSW State Forest Boundaries"/>
+        <property name="description" value=""/>
+        <property name="proxyUrl" value=""/>
+        <property name="proxyCountUrl" value=""/>
+        <property name="group" value="Land Use"/>
+        <property name="order" value="10_Land Use_13" />
+    </bean>
 	
 	
 	
