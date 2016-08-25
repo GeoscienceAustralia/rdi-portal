@@ -220,7 +220,7 @@
         <constructor-arg name="id" value="stateForestQLD"/>
         <constructor-arg name="knownLayerSelector">
             <bean class="org.auscope.portal.core.view.knownlayer.WMSSelector">
-                <constructor-arg name="layerName" value="Restricted Areas"/>
+                <constructor-arg name="layerName" value="Restricted Area"/>
             </bean>
         </constructor-arg>
         <property name="name" value="QLD Restricted Areas"/>
@@ -231,8 +231,147 @@
         <property name="order" value="10_Land Use_14" />
     </bean>
 	
+    <bean id="knownTypeTasmaniaWetlands" class="org.auscope.portal.core.view.knownlayer.KnownLayer">
+        <constructor-arg name="id" value="wetlandsTasmania"/>
+        <constructor-arg name="knownLayerSelector">
+            <bean class="org.auscope.portal.core.view.knownlayer.CSWRecordSelector">
+                <property name="recordId" value="907c4fa8e40cef9f561680b0db5a5939337cc46d"/>
+            </bean>
+        </constructor-arg>
+        <property name="name" value="Tasmania Wetlands"/>
+        <property name="description" value=""/>
+        <property name="proxyUrl" value=""/>
+        <property name="proxyCountUrl" value=""/>
+        <property name="group" value="Land Use"/>
+        <property name="order" value="10_Land Use_15" />
+    </bean>
 	
 	
+    <bean id="knownTypeTasmaniaForest" class="org.auscope.portal.core.view.knownlayer.KnownLayer">
+        <constructor-arg name="id" value="forestTasmania"/>
+        <constructor-arg name="knownLayerSelector">
+            <bean class="org.auscope.portal.core.view.knownlayer.CSWRecordSelector">
+                <property name="recordId" value="06bee991e3a92e17c8955ba3aa48abcdb598e9aa"/>
+            </bean>
+        </constructor-arg>
+        <property name="name" value="Tasmania Forests"/>
+        <property name="description" value=""/>
+        <property name="proxyUrl" value=""/>
+        <property name="proxyCountUrl" value=""/>
+        <property name="group" value="Land Use"/>
+        <property name="order" value="10_Land Use_16" />
+    </bean>
+    
+    
+    <bean id="knownTypeVictoriaWaterWell" class="org.auscope.portal.core.view.knownlayer.KnownLayer">
+        <constructor-arg name="id" value="waterWellsVictoria"/>
+        <constructor-arg name="knownLayerSelector">
+            <bean class="org.auscope.portal.core.view.knownlayer.WMSSelector">
+                <constructor-arg name="layerName" value="VMHYDRO_WATER_STRUCT_WELL"/>
+            </bean>
+        </constructor-arg>
+        <property name="name" value="Bore or Water Well - Victoria"/>
+        <property name="description" value=""/>
+        <property name="proxyUrl" value=""/>
+        <property name="proxyCountUrl" value=""/>
+        <property name="group" value="Land Use"/>
+        <property name="order" value="10_Land Use_17" />
+    </bean>
+    
+    <bean id="knownTypeVictoriaWetlands" class="org.auscope.portal.core.view.knownlayer.KnownLayer">
+        <constructor-arg name="id" value="wetlandsVictoria"/>
+        <constructor-arg name="knownLayerSelector">
+            <bean class="org.auscope.portal.core.view.knownlayer.WMSSelector">
+                <constructor-arg name="layerName" value="FLORAFAUNA1_WETLAND_1994"/>
+            </bean>
+        </constructor-arg>
+        <property name="name" value="Wetlands - Victoria"/>
+        <property name="description" value=""/>
+        <property name="proxyUrl" value=""/>
+        <property name="proxyCountUrl" value=""/>
+        <property name="group" value="Land Use"/>
+        <property name="order" value="10_Land Use_18" />
+    </bean>
+    
+    <bean id="knownTypeVictoriaBeaches" class="org.auscope.portal.core.view.knownlayer.KnownLayer">
+        <constructor-arg name="id" value="beachesVictoria"/>
+        <constructor-arg name="knownLayerSelector">
+            <bean class="org.auscope.portal.core.view.knownlayer.WMSSelector">
+                <constructor-arg name="layerName" value="FLORAFAUNA1_NV2005_EVCBCS_13_3"/>
+            </bean>
+        </constructor-arg>
+        <property name="name" value="Beaches, dunes and shallow sands - Victoria"/>
+        <property name="description" value=""/>
+        <property name="proxyUrl" value=""/>
+        <property name="proxyCountUrl" value=""/>
+        <property name="group" value="Land Use"/>
+        <property name="order" value="10_Land Use_19" />
+    </bean>
+    
+    <bean id="knownTypeVictoriaPoorlyDrainingNativeVegetation" class="org.auscope.portal.core.view.knownlayer.KnownLayer">
+        <constructor-arg name="id" value="poorlyDrainingNativeVegetationVictoria"/>
+        <constructor-arg name="knownLayerSelector">
+            <bean class="org.auscope.portal.core.view.knownlayer.WMSSelector">
+                <constructor-arg name="layerName" value="FLORAFAUNA1_NV2005_EVCBCS_13_2"/>
+            </bean>
+        </constructor-arg>
+        <property name="name" value="Poorly Draining Native Vegetation - Victoria"/>
+        <property name="description" value=""/>
+        <property name="proxyUrl" value=""/>
+        <property name="proxyCountUrl" value=""/>
+        <property name="group" value="Land Use"/>
+        <property name="order" value="10_Land Use_20" />
+    </bean>
+    
+    <bean id="knownTypeWASurfaceWater" class="org.auscope.portal.core.view.knownlayer.KnownLayer">
+        <constructor-arg name="id" value="surfaceWaterWA"/>
+        <constructor-arg name="knownLayerSelector">
+            <bean class="org.auscope.portal.core.view.knownlayer.CSWRecordSelector">
+                <property name="recordId" value="ce816dd4728da6e83371dcd66014b54e94f1cb27"/>
+            </bean>
+        </constructor-arg>
+        <property name="name" value="Surface Water Allocation Areas - WA"/>
+        <property name="description" value=""/>
+        <property name="proxyUrl" value=""/>
+        <property name="proxyCountUrl" value=""/>
+        <property name="group" value="Land Use"/>
+        <property name="order" value="10_Land Use_21" />
+    </bean>
+    
+    <bean id="knownTypeWAConservationTargetAreas" class="org.auscope.portal.core.view.knownlayer.KnownLayer">
+        <constructor-arg name="id" value="conservationTargetAreasWA"/>
+        <constructor-arg name="knownLayerSelector">
+            <bean class="org.auscope.portal.core.view.knownlayer.CSWRecordSelector">
+                <property name="recordId" value="d34dce3fd91b055e61662394114d152766934919"/>
+            </bean>
+        </constructor-arg>
+        <property name="name" value="Conservation Target Areas - WA"/>
+        <property name="description" value=""/>
+        <property name="proxyUrl" value=""/>
+        <property name="proxyCountUrl" value=""/>
+        <property name="group" value="Land Use"/>
+        <property name="order" value="10_Land Use_22" />
+    </bean>
+    
+    
+    <bean id="knownTypeWARegionalParks" class="org.auscope.portal.core.view.knownlayer.KnownLayer">
+        <constructor-arg name="id" value="regionalParksWA"/>
+        <constructor-arg name="knownLayerSelector">
+            <bean class="org.auscope.portal.core.view.knownlayer.CSWRecordSelector">
+                <property name="recordId" value="3c118840b49834dff6a38901dac86ad4bd8fd8c8"/>
+            </bean>
+        </constructor-arg>
+        <property name="name" value="Regional Parks - WA"/>
+        <property name="description" value=""/>
+        <property name="proxyUrl" value=""/>
+        <property name="proxyCountUrl" value=""/>
+        <property name="group" value="Land Use"/>
+        <property name="order" value="10_Land Use_23" />
+    </bean>
+    
+    
+    <!-- Geoscience Portal / AusCope Below -->
+    
 	<bean id="knownTypeMine" class="org.auscope.portal.core.view.knownlayer.KnownLayer">
 		<constructor-arg name="id" value="erml-mine" />
 		<constructor-arg name="knownLayerSelector">

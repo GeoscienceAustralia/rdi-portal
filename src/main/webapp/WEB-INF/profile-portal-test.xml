@@ -1,35 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:tx="http://www.springframework.org/schema/tx"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
        http://www.springframework.org/schema/tx
        http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
-
-
     <!-- All elements must be of type org.auscope.portal.server.web.KnownLayer -->
     <bean id="knownTypes" class="java.util.ArrayList">
         <constructor-arg>
             <list>
-            
-            	<!--  RDI LAYERS -->
-            	<ref bean="knownTypeLandCover" />
-            	<ref bean="knownTypeImportantWetlands" />
-            	<ref bean="knownTypeNationalHeritageList" />
-            	<ref bean="knownTypeKeyEcologicalFeatures" />
-            	<ref bean="knownTypeCommonwealthMarineRegions" />
-            	<ref bean="knownTypeVegetationCultivatedAreas" />
-            	<ref bean="knownTypeVegetationNativeVegetationAreas" />
-            	<ref bean="knownTypeSurfaceCatchment" />
-            	<ref bean="knownTypeHydrographyLakes" />
-            	<ref bean="knownTypeFences" />
-            	<ref bean="knownTypeMarineInfrastructure" />
-            	<ref bean="knownTypeMineAreas" />
-                
+                <!-- RDI LAYERS -->
+                <ref bean="knownTypeLandCover" />
+                <ref bean="knownTypeImportantWetlands" />
+                <ref bean="knownTypeNationalHeritageList" />
+                <ref bean="knownTypeKeyEcologicalFeatures" />
+                <ref bean="knownTypeCommonwealthMarineRegions" />
+                <ref bean="knownTypeVegetationCultivatedAreas" />
+                <ref bean="knownTypeVegetationNativeVegetationAreas" />
+                <ref bean="knownTypeSurfaceCatchment" />
+                <ref bean="knownTypeHydrographyLakes" />
+                <ref bean="knownTypeFences" />
+                <ref bean="knownTypeMarineInfrastructure" />
+                <ref bean="knownTypeMineAreas" />
                 <ref bean="knownTypeNSWStateForest" />
                 <ref bean="knownTypeQLDRestrictedAreas" />
-            	
+                <ref bean="knownTypeTasmaniaWetlands" />
+                <ref bean="knownTypeTasmaniaForest" />
+                <ref bean="knownTypeVictoriaWaterWell" />
+                <ref bean="knownTypeVictoriaWetlands" />
+                <ref bean="knownTypeVictoriaBeaches" />
+                <ref bean="knownTypeVictoriaPoorlyDrainingNativeVegetation" />
+                
+                
+                <ref bean="knownTypeWASurfaceWater" />
+                <ref bean="knownTypeWAConservationTargetAreas" />
+                <ref bean="knownTypeWARegionalParks" />
+                <!-- -->
                 <!-- Restricted Areas -->
                 <ref bean="knownTypeProtectedAreasCAPAD2014Marine" />
                 <ref bean="knownTypeProtectedAreasCAPAD2014Terrestrial" />
@@ -37,13 +43,9 @@
                 <ref bean="knownTypeDefence_Prohibited_Areas" />
                 <ref bean="knownTypeDefence_Practice_Areas" />
                 <ref bean="knownTypeDefence_Training_Areas" />
-            
                 <ref bean="knownTypeOil" />
                 <ref bean="knownTypeGas" />
                 <ref bean="knownTypeMajorPorts" />
-                
-                <ref bean="knownTypeMineralOccurrenceView" />
-                                
                 <!-- National Geophysical Datasets -->
                 <ref bean="knownTypeOnshoreSeismicSurveys" />
                 <ref bean="knownTypeAirborneSurveys2014" />
@@ -66,26 +68,18 @@
                 <ref bean="knownTypeRadiometrics2015FilteredUKRatio" />
                 <ref bean="knownTypeRadiometrics2015FilteredUThRatio" />
                 <ref bean="knownTypeRadiometrics2015FilteredU2ThRatio" />
-                
                 <ref bean="knownTypeNVCLBoreholes" />
                 <ref bean="knownTypeAllBoreholes" />
-                
                 <ref bean="knownTypeMineralTenements" />
-                
             </list>
         </constructor-arg>
     </bean>
-
     <bean id="cswServiceList" class="java.util.ArrayList">
         <constructor-arg>
             <list>
                 <ref bean="cswRDI" />
-                <ref bean="cswGaDev" />
-               
-                <ref bean="cswEnvironment"/>
-
+                <ref bean="cswEnvironment" />
             </list>
         </constructor-arg>
     </bean>
-
 </beans>
