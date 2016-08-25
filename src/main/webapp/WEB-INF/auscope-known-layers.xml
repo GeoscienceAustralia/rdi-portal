@@ -215,6 +215,21 @@
         <property name="group" value="Land Use"/>
         <property name="order" value="10_Land Use_13" />
     </bean>
+    
+    <bean id="knownTypeQLDRestrictedAreas" class="org.auscope.portal.core.view.knownlayer.KnownLayer">
+        <constructor-arg name="id" value="stateForestQLD"/>
+        <constructor-arg name="knownLayerSelector">
+            <bean class="org.auscope.portal.core.view.knownlayer.WMSSelector">
+                <constructor-arg name="layerName" value="Restricted Areas"/>
+            </bean>
+        </constructor-arg>
+        <property name="name" value="QLD Restricted Areas"/>
+        <property name="description" value=""/>
+        <property name="proxyUrl" value=""/>
+        <property name="proxyCountUrl" value=""/>
+        <property name="group" value="Land Use"/>
+        <property name="order" value="10_Land Use_14" />
+    </bean>
 	
 	
 	

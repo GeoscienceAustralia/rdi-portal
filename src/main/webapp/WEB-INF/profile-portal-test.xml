@@ -28,6 +28,7 @@
             	<ref bean="knownTypeMineAreas" />
                 
                 <ref bean="knownTypeNSWStateForest" />
+                <ref bean="knownTypeQLDRestrictedAreas" />
             	
                 <!-- Restricted Areas -->
                 <ref bean="knownTypeProtectedAreasCAPAD2014Marine" />
