@@ -102,7 +102,23 @@
         <constructor-arg>
             <list>
                 <ref bean="cswRDI" />
+                <ref bean="cswGswa" />
+                <ref bean="cswGsq" />
+                <ref bean="cswGsv" />
+                <ref bean="cswMineralResourcesTasmania" />
+                <ref bean="cswAustralianTopography" />
+                <ref bean="cswAustralianSurfaceGeology" />
+                <ref bean="cswBoreholeNVCL"/>
+                <ref bean="cswBoreholeView"/>
+                <ref bean="cswBoreholeViewWMS"/>
+                <ref bean="cswASTER" />
+                <ref bean="cswRestrictedAreas"/>
+                <ref bean="cswGeologicalMaps"/>
+                <ref bean="cswScannedMapsIndex"/>
+                <ref bean="cswNationalGeophysicalDatasets"/>
+                <ref bean="cswBoreholes"/>
                 <ref bean="cswEnvironment" />
+                
             </list>
         </constructor-arg>
     </bean>
