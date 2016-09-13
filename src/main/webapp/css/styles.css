@@ -26,22 +26,22 @@
     .x-btn-inner,
     .x-grid-cell-inner,
     .x-form-display-field-default {
-        color: #2B292A !important;
+        color: #005677 !important;
     }    
      
     .x-grid-item-selected {
         background-color: #E6E6E6 !important;
-        color: #2B292A !important;
+        color: #005677 !important;
     }
     
     .x-grid-item-over {
         background-color: #E6E6E6 !important;
-        color: #2B292A !important;
+        color: #005677 !important;
     }
     
     .x-grid-cell-inner::before {
         border: none !important;
-        color: #2B292A !important;
+        color: #005677 !important;
     }
     
     .x-panel-header-title-default > .x-title-text-default:after {
@@ -72,18 +72,18 @@
     }
 
     #header-container {
-        background-color: #2B292A;
+        background-color: #005677;
         width: 100% !important;
         height: 130px !important;
     }
 
     #header-container div {
-        background-color: #2B292A;
+        background-color: #005677;
         border: none !important;
     }
         
     #header-container-body div {
-        border-color: #2B292A;
+        border-color: #005677;
 
     }
     
@@ -143,7 +143,7 @@
     #header-container-innerCt {
         width: 100%;
         color: #ffffff;
-        background-color: #2B292A;
+        background-color: #005677;
         position:fixed;
         top: 0px;
         left: 0px;
@@ -164,7 +164,7 @@
     #ausgin-logo {        
         width: 100% !important;
         margin-left: 10px !important;
-        background: #2B292A url( "../img/logos/ausgin-logo.png" ) no-repeat top left;
+        background: #005677 url( "../img/logos/ausgin-logo.png" ) no-repeat top left;
         display : block !important;
         height : 59px !important;
         position : relative;
@@ -199,7 +199,7 @@
         position: fixed;
         left: 0px;
         z-index: 1;
-        background-color: #FBAD17 !important;
+        background-color: #aaaaaa !important;
         line-height: 30px;
         font: 12px Arial, Tahoma, Helvetica, sans-serif;
         margin-top : 0 !important;
@@ -244,7 +244,7 @@
     #basic-search-link {
         height: 25px;
         width: 30px;
-        background: #FBAD17 url( "../img/magglass.gif" ) no-repeat center center; 
+        background: #aaaaaa url( "../img/magglass.gif" ) no-repeat center center; 
         border: 1px solid #ffffff;    
     }
     
@@ -353,7 +353,7 @@
         text-overflow: ellipsis;
         display: block;
     }
-	
+    
     .gasearchresult {
         
     }
@@ -384,11 +384,6 @@
     }
     
     .gasearchresult .links a {
-        padding-right: 30px;
-        position: relative !important;
-    }
-    
-    .gasearchresult .links span {
         padding-right: 30px;
         position: relative !important;
     }
@@ -478,57 +473,5 @@
     }
     
     .x-menu-header {
-        background-color: #FBAD17 !important;
-    }
-
-    h1.featureInfo {
-        font-size: 14pt;
-        margin-bottom: -20px;
-    }
-
-    table.featureInfo {
-        margin-top: 10px;
-        width: 100%;
-        border:1px solid black;
-        font-family: arial;
-        font-size: 90%; color: #333333;
-        border-spacing: unset;
-    }
-
-    table.featureInfo>tbody>tr>td {
-        padding: 2px;
-    }
-
-    table.featureInfo>tbody>tr>td:first-child {
-        font-weight: bold;
-    }
-
-    table.featureInfo>tbody>tr:nth-child(even) {
-        background: #CCC
-    }
-
-    table.featureInfo>tbody>tr:nth-child(odd) {
-        background: #FFF
-    }
-
-    table.featureInfo>th, table.featureInfo>td {
-       valign: top; text-align: left;
-    }
-
-    table.featureInfo>th {
-       background-color: #aed7ff;
-    }
-
-    #legendPopup .x-panel-body {
-        padding-bottom: 16px;
-        padding-right: 16px;
-    }
-
-    .x-btn-inner-default-small, 
-    .x-btn-inner-default-toolbar-small {
-        max-width: calc(100%) !important;
-    }
-
-    .noTextOverflow .x-grid-cell-inner  {
-        text-overflow: clip !important;
+        background-color: #aaaaaa !important;
     }
